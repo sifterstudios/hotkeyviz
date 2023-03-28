@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: aec44fd9a12d464b19c372008a763b4f
+guid: b56b1d13a75fbbc1882f4b2cf41fc99e
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,8 +9,9 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - VictorMono Nerd Font
-  fallbackFontReferences: []
+  - Victor Mono
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 941e3455ebed096969853d3fa29dbcdf, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
