@@ -1,35 +1,38 @@
 using TMPro;
 using UnityEngine;
 
-public class Button : MonoBehaviour
+namespace Sifter
 {
-    [SerializeField] GameObject _border;
-    [SerializeField] TMP_Text _text;
-    [SerializeField] bool _changeable;
-    [SerializeField] int _row;
-    [SerializeField] int _column;
-
-    void OnMouseEnter()
+    public class Button : MonoBehaviour
     {
-        _border.SetActive(true);
-    }
+        [SerializeField] TMP_Text _text;
+        [SerializeField] bool _changeable;
 
-    void OnMouseExit()
-    {
-        _border.SetActive(false);
-    }
+        public int _row;
+        public int _column;
+        public string normalText = "K";
+        public string shiftText = "";
+
+        void Start()
+        {
+            _text = GetComponentInChildren<TMP_Text>();
+            _text.text = normalText;
+        }
+
 #if UNITY_EDITOR
-    void OnValidate()
-    {
-        _text = GetComponentInChildren<TMP_Text>();
-        var transformLocalScale = _text.transform.localScale;
-        var localScale = transformLocalScale;
-        var x = localScale.x;
-        var y = localScale.y;
-        if (x > y)
-            transformLocalScale.x = y;
-        else
-            transformLocalScale.y = x;
-    }
+        void OnValidate()
+        {
+            _text = GetComponentInChildren<TMP_Text>();
+            _text.text = normalText;
+            var transformLocalScale = _text.transform.localScale;
+            var localScale = transformLocalScale;
+            var x = localScale.x;
+            var y = localScale.y;
+            if (x > y)
+                transformLocalScale.x = y;
+            else
+                transformLocalScale.y = x;
+        }
 #endif
+    }
 }
