@@ -1,4 +1,4 @@
-namespace Sifter
+namespace Sifter.Keyboard
 {
     public record KeyboardPosition
     {

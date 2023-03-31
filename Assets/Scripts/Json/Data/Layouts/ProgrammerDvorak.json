@@ -1,0 +1,381 @@
+{
+  "layoutName": "Programmer Dvorak",
+  "keyboardButtons": [
+    {
+      "key": "'",
+      "shiftKey": "\"",
+      "position": {
+        "row": 1,
+        "column": 1
+      }
+    },
+    {
+      "key": "q",
+      "shiftKey": "Q",
+      "position": {
+        "row": 2,
+        "column": 1
+      }
+    },
+    {
+      "key": "j",
+      "shiftKey": "J",
+      "position": {
+        "row": 3,
+        "column": 1
+      }
+    },
+    {
+      "key": "k",
+      "shiftKey": "K",
+      "position": {
+        "row": 4,
+        "column": 1
+      }
+    },
+    {
+      "key": "x",
+      "shiftKey": "X",
+      "position": {
+        "row": 5,
+        "column": 1
+      }
+    },
+    {
+      "key": "b",
+      "shiftKey": "B",
+      "position": {
+        "row": 6,
+        "column": 1
+      }
+    },
+    {
+      "key": "m",
+      "shiftKey": "M",
+      "position": {
+        "row": 7,
+        "column": 1
+      }
+    },
+    {
+      "key": "w",
+      "shiftKey": "W",
+      "position": {
+        "row": 8,
+        "column": 1
+      }
+    },
+    {
+      "key": "v",
+      "shiftKey": "V",
+      "position": {
+        "row": 9,
+        "column": 1
+      }
+    },
+    {
+      "key": "z",
+      "shiftKey": "Z",
+      "position": {
+        "row": 10,
+        "column": 1
+      }
+    },
+    {
+      "key": "a",
+      "shiftKey": "A",
+      "position": {
+        "row": 1,
+        "column": 2
+      }
+    },
+    {
+      "key": "o",
+      "shiftKey": "O",
+      "position": {
+        "row": 2,
+        "column": 2
+      }
+    },
+    {
+      "key": "e",
+      "shiftKey": "E",
+      "position": {
+        "row": 3,
+        "column": 2
+      }
+    },
+    {
+      "key": "u",
+      "shiftKey": "U",
+      "position": {
+        "row": 4,
+        "column": 2
+      }
+    },
+    {
+      "key": "i",
+      "shiftKey": "I",
+      "position": {
+        "row": 5,
+        "column": 2
+      }
+    },
+    {
+      "key": "d",
+      "shiftKey": "D",
+      "position": {
+        "row": 6,
+        "column": 2
+      }
+    },
+    {
+      "key": "h",
+      "shiftKey": "H",
+      "position": {
+        "row": 7,
+        "column": 2
+      }
+    },
+    {
+      "key": "t",
+      "shiftKey": "T",
+      "position": {
+        "row": 8,
+        "column": 2
+      }
+    },
+    {
+      "key": "n",
+      "shiftKey": "N",
+      "position": {
+        "row": 9,
+        "column": 2
+      }
+    },
+    {
+      "key": "s",
+      "shiftKey": "S",
+      "position": {
+        "row": 10,
+        "column": 2
+      }
+    },
+    {
+      "key": "-",
+      "shiftKey": "_",
+      "position": {
+        "row": 11,
+        "column": 2
+      }
+    },
+    {
+      "key": ";",
+      "shiftKey": ":",
+      "position": {
+        "row": 1,
+        "column": 3
+      }
+    },
+    {
+      "key": ",",
+      "shiftKey": "<",
+      "position": {
+        "row": 2,
+        "column": 3
+      }
+    },
+    {
+      "key": ".",
+      "shiftKey": ">",
+      "position": {
+        "row": 3,
+        "column": 3
+      }
+    },
+    {
+      "key": "p",
+      "shiftKey": "P",
+      "position": {
+        "row": 4,
+        "column": 3
+      }
+    },
+    {
+      "key": "y",
+      "shiftKey": "Y",
+      "position": {
+        "row": 5,
+        "column": 3
+      }
+    },
+    {
+      "key": "f",
+      "shiftKey": "F",
+      "position": {
+        "row": 6,
+        "column": 3
+      }
+    },
+    {
+      "key": "g",
+      "shiftKey": "G",
+      "position": {
+        "row": 7,
+        "column": 3
+      }
+    },
+    {
+      "key": "c",
+      "shiftKey": "C",
+      "position": {
+        "row": 8,
+        "column": 3
+      }
+    },
+    {
+      "key": "r",
+      "shiftKey": "R",
+      "position": {
+        "row": 9,
+        "column": 3
+      }
+    },
+    {
+      "key": "l",
+      "shiftKey": "L",
+      "position": {
+        "row": 10,
+        "column": 3
+      }
+    },
+    {
+      "key": "/",
+      "shiftKey": "?",
+      "position": {
+        "row": 11,
+        "column": 3
+      }
+    },
+    {
+      "key": "@",
+      "shiftKey": "^",
+      "position": {
+        "row": 12,
+        "column": 3
+      }
+    },
+    {
+      "key": "\\",
+      "shiftKey": "|",
+      "position": {
+        "row": 13,
+        "column": 3
+      }
+    },
+    {
+      "key": "$",
+      "shiftKey": "~",
+      "position": {
+        "row": 1,
+        "column": 4
+      }
+    },
+    {
+      "key": "&",
+      "shiftKey": "%",
+      "position": {
+        "row": 2,
+        "column": 4
+      }
+    },
+    {
+      "key": "[",
+      "shiftKey": "7",
+      "position": {
+        "row": 3,
+        "column": 4
+      }
+    },
+    {
+      "key": "{",
+      "shiftKey": "5",
+      "position": {
+        "row": 4,
+        "column": 4
+      }
+    },
+    {
+      "key": "}",
+      "shiftKey": "}",
+      "position": {
+        "row": 5,
+        "column": 4
+      }
+    },
+    {
+      "key": "(",
+      "shiftKey": "1",
+      "position": {
+        "row": 6,
+        "column": 4
+      }
+    },
+    {
+      "key": "=",
+      "shiftKey": "9",
+      "position": {
+        "row": 7,
+        "column": 4
+      }
+    },
+    {
+      "key": "*",
+      "shiftKey": "0",
+      "position": {
+        "row": 8,
+        "column": 4
+      }
+    },
+    {
+      "key": ")",
+      "shiftKey": "2",
+      "position": {
+        "row": 9,
+        "column": 4
+      }
+    },
+    {
+      "key": "+",
+      "shiftKey": "4",
+      "position": {
+        "row": 10,
+        "column": 4
+      }
+    },
+    {
+      "key": "]",
+      "shiftKey": "6",
+      "position": {
+        "row": 11,
+        "column": 4
+      }
+    },
+    {
+      "key": "!",
+      "shiftKey": "8",
+      "position": {
+        "row": 12,
+        "column": 4
+      }
+    },
+    {
+      "key": "#",
+      "shiftKey": "`",
+      "position": {
+        "row": 13,
+        "column": 4
+      }
+    }
+  ]
+}
