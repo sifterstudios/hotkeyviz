@@ -13,7 +13,13 @@ namespace Sifter.Button
 
 
         public KeyboardButton KeyboardButton;
-        bool isShiftPressed;
+        bool _isShiftPressed;
+
+        void Awake()
+        {
+            InputManager.Instance.Inputactions.Browse.ShiftLayerVisual.performed += ctx => ShiftPressed();
+            InputManager.Instance.Inputactions.Browse.ShiftLayerVisual.canceled += ctx => ShiftReleased();
+        }
 
         void Start()
         {
@@ -36,10 +42,22 @@ namespace Sifter.Button
                 transformLocalScale.y = x;
         }
 #endif
+
+        void ShiftPressed()
+        {
+            _isShiftPressed = true;
+            RedrawKey();
+        }
+
+        void ShiftReleased()
+        {
+            _isShiftPressed = false;
+            RedrawKey();
+        }
+
         public void RedrawKey()
         {
-            print("Got to this point");
-            _text.text = isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
+            _text.text = _isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
         }
     }
 }
