@@ -1,5 +1,4 @@
 using Sifter.Keyboard;
-using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
@@ -9,19 +8,23 @@ namespace Sifter.Button
     {
         [SerializeField] TMP_Text _text;
         [SerializeField] bool _changeable;
+        [SerializeField] int _col;
+        [SerializeField] int _row;
 
-        [ShowInInspector] public KeyboardButton KeyboardButton = new();
+
+        public KeyboardButton KeyboardButton;
         bool isShiftPressed;
 
         void Start()
         {
-            _text.text = KeyboardButton.Key;
+            if (!_changeable) _text.text = KeyboardButton.Key;
+            KeyboardButton.Position.Column = _col;
+            KeyboardButton.Position.Row = _row;
         }
 
 #if UNITY_EDITOR
         void OnValidate()
         {
-            _text = GetComponentInChildren<TMP_Text>();
             _text.text = KeyboardButton.Key;
             var transformLocalScale = _text.transform.localScale;
             var localScale = transformLocalScale;
@@ -33,9 +36,10 @@ namespace Sifter.Button
                 transformLocalScale.y = x;
         }
 #endif
-        public void redrawKey()
+        public void RedrawKey()
         {
-            _text.text = isShiftPressed ? KeyboardButton.Key : KeyboardButton.ShiftKey;
+            print("Got to this point");
+            _text.text = isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
         }
     }
 }

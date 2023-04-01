@@ -386,38 +386,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30599c903c23cf5a1b0cabdf07c81a95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: KeyboardButton
-      Entry: 7
-      Data: 0|Sifter.Keyboard.KeyboardButton, Assembly-CSharp
-    - Name: Key
-      Entry: 6
-      Data: 
-    - Name: ShiftKey
-      Entry: 6
-      Data: 
-    - Name: Position
-      Entry: 7
-      Data: 1|Sifter.Keyboard.KeyboardPosition, Assembly-CSharp
-    - Name: Row
-      Entry: 3
-      Data: 0
-    - Name: Column
-      Entry: 3
-      Data: 0
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
   _text: {fileID: 6142112872971586294}
   _changeable: 1
+  KeyboardButton: {}

@@ -6,7 +6,7 @@ namespace Sifter.Keyboard
     [Serializable]
     public record KeyboardButton
     {
-        [ShowInInspector] public KeyboardPosition Position = new();
+        [ShowInInspector] public KeyboardPosition Position;
 
         [ShowInInspector] public string Key { get; set; }
 

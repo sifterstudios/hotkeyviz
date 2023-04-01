@@ -15,12 +15,12 @@ namespace Sifter.Keyboard
             foreach (var button in keyboardButtons)
             {
                 print(button.ToString());
-                foreach (var goButton in _buttons.Where(goButton =>
-                             goButton.KeyboardButton.Position == button.Position))
+                foreach (var b in _buttons.Where(b => b.KeyboardButton.Position.Column == button.Position.Row &&
+                                                      b.KeyboardButton.Position.Row == button.Position.Column))
                 {
-                    goButton.KeyboardButton.Key = button.Key;
-                    goButton.KeyboardButton.ShiftKey = button.ShiftKey;
-                    goButton.redrawKey();
+                    b.KeyboardButton.Key = button.Key;
+                    b.KeyboardButton.ShiftKey = button.ShiftKey;
+                    b.RedrawKey();
                 }
             }
         }
