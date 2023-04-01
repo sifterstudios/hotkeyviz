@@ -1,12 +1,12 @@
+using Sifter.Keyboard;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace Sifter
+namespace Sifter.Managers
 {
     public class GameManager : MonoBehaviour
     {
         [SerializeField] KeyboardPopulator _keyboardPopulator;
-       public SaveManager _saveManager = new SaveManager();
+        public SaveManager SaveManager = new();
 
         static GameManager Singleton { get; set; }
 

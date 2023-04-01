@@ -1,9 +1,21 @@
+using System;
+using Sirenix.OdinInspector;
+
 namespace Sifter.Keyboard
 {
-    public class KeyboardButton
+    [Serializable]
+    public record KeyboardButton
     {
-        public string Key { get; set; }
-        public string ShiftKey { get; set; }
-        public KeyboardPosition Position { get; set; }
+        [ShowInInspector] public KeyboardPosition Position = new();
+
+        [ShowInInspector] public string Key { get; set; }
+
+        [ShowInInspector] public string ShiftKey { get; set; }
+
+
+        public override string ToString()
+        {
+            return "Key: " + Key + ", ShiftKey: " + ShiftKey + ", Position: " + Position;
+        }
     }
 }

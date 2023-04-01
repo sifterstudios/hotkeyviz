@@ -1,29 +1,24 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Sifter.Keyboard;
 
 namespace Sifter.Json
 {
-    public class LayoutLoader
+    public static class LayoutLoader
     {
-        public static IList<KeyboardButton> LoadLayout()
+        public static List<KeyboardButton> LoadLayout()
         {
-            var json = File.ReadAllText("Assets/Json/ProgrammerDvorak.json");
+            var json = File.ReadAllText("Assets/Scripts/Json/Data/Layouts/ProgrammerDvorak.json");
             var jsonObject = JObject.Parse(json);
-            IList<JToken> results = jsonObject["KeyboardButtons"]?.Children().ToList();
-            IList<KeyboardButton> keyboardButtons = new List<KeyboardButton>();
-            if (results != null)
-                foreach (var button in results)
-                {
-                    var kb = button.ToObject<KeyboardButton>();
-                    keyboardButtons.Add(kb);
-                }
+            IList<JToken> results = jsonObject["keyboardButtons"]?.Children().ToList();
+            var keyboardButtons = new List<KeyboardButton>();
 
-            JsonConvert.DeserializeObject<List<KeyboardButton>>(json);
-            // Return the list of KeyboardButton objects
+            if (results == null) return keyboardButtons;
+
+            keyboardButtons.AddRange(results.Select(button => button.ToObject<KeyboardButton>()));
+
             return keyboardButtons;
         }
     }
