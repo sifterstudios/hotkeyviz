@@ -7,12 +7,11 @@ namespace Sifter.Button
     public class Button : MonoBehaviour
     {
         [SerializeField] TMP_Text _text;
-        [SerializeField] bool _changeable;
         [SerializeField] int _col;
         [SerializeField] int _row;
 
-
         public KeyboardButton KeyboardButton;
+        public bool Changeable;
         bool _isShiftPressed;
 
         void Awake()
@@ -23,7 +22,7 @@ namespace Sifter.Button
 
         void Start()
         {
-            if (!_changeable) _text.text = KeyboardButton.Key;
+            if (!Changeable) _text.text = KeyboardButton.Key;
             KeyboardButton.Position.Column = _col;
             KeyboardButton.Position.Row = _row;
         }
@@ -31,7 +30,7 @@ namespace Sifter.Button
 #if UNITY_EDITOR
         void OnValidate()
         {
-            _text.text = KeyboardButton.Key;
+            if (Changeable) _text.text = KeyboardButton.Key;
             var transformLocalScale = _text.transform.localScale;
             var localScale = transformLocalScale;
             var x = localScale.x;
@@ -45,18 +44,21 @@ namespace Sifter.Button
 
         void ShiftPressed()
         {
+            if (!Changeable) return;
             _isShiftPressed = true;
             RedrawKey();
         }
 
         void ShiftReleased()
         {
+            if (!Changeable) return;
             _isShiftPressed = false;
             RedrawKey();
         }
 
         public void RedrawKey()
         {
+            if (!Changeable) return;
             _text.text = _isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
         }
     }

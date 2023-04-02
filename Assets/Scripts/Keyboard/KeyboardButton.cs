@@ -8,10 +8,8 @@ namespace Sifter.Keyboard
     {
         [ShowInInspector] public KeyboardPosition Position;
 
-        [ShowInInspector] public string Key { get; set; }
-
-        [ShowInInspector] public string ShiftKey { get; set; }
-
+        public string Key;
+        public string ShiftKey;
 
         public override string ToString()
         {

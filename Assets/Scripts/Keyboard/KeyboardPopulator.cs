@@ -18,6 +18,7 @@ namespace Sifter.Keyboard
                 foreach (var b in _buttons.Where(b => b.KeyboardButton.Position.Column == button.Position.Row &&
                                                       b.KeyboardButton.Position.Row == button.Position.Column))
                 {
+                    if (!b.Changeable) continue;
                     b.KeyboardButton.Key = button.Key;
                     b.KeyboardButton.ShiftKey = button.ShiftKey;
                     b.RedrawKey();
