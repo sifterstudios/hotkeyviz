@@ -2,7 +2,7 @@ using Sifter.Keyboard;
 using TMPro;
 using UnityEngine;
 
-namespace Sifter.Button
+namespace Sifter.UI.Button
 {
     public class Button : MonoBehaviour
     {

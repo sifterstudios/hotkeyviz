@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Sifter
+namespace Sifter.UI.Button
 {
     public class ButtonBorder : MonoBehaviour
     {
