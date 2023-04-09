@@ -1,6 +1,7 @@
 using Sifter.Keyboard;
 using TMPro;
 using UnityEngine;
+using static Sifter.InputManager;
 
 namespace Sifter.UI.Button
 {
@@ -16,8 +17,8 @@ namespace Sifter.UI.Button
 
         void Awake()
         {
-            InputManager.Instance.Inputactions.Browse.ShiftLayerVisual.performed += ctx => ShiftPressed();
-            InputManager.Instance.Inputactions.Browse.ShiftLayerVisual.canceled += ctx => ShiftReleased();
+            Singleton.Inputactions.Browse.ShiftLayerVisual.performed += _ => ShiftPressed();
+            Singleton.Inputactions.Browse.ShiftLayerVisual.canceled += _ => ShiftReleased();
         }
 
         void Start()
@@ -25,6 +26,12 @@ namespace Sifter.UI.Button
             if (!Changeable) _text.text = KeyboardButton.Key;
             KeyboardButton.Position.Column = _col;
             KeyboardButton.Position.Row = _row;
+        }
+
+        void OnDisable()
+        {
+            Singleton.Inputactions.Browse.ShiftLayerVisual.performed -= _ => ShiftPressed();
+            Singleton.Inputactions.Browse.ShiftLayerVisual.canceled -= _ => ShiftReleased();
         }
 
 #if UNITY_EDITOR
@@ -35,10 +42,9 @@ namespace Sifter.UI.Button
             var localScale = transformLocalScale;
             var x = localScale.x;
             var y = localScale.y;
-            if (x > y)
-                transformLocalScale.x = y;
-            else
-                transformLocalScale.y = x;
+
+            if (x > y) transformLocalScale.x = y;
+            else transformLocalScale.y = x;
         }
 #endif
 

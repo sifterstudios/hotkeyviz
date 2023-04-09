@@ -1,17 +1,24 @@
-using System;
+using Sifter.Managers;
+using TMPro;
+using UnityEngine;
 
-namespace Sifter.UI.Dropdown.KeymapDropdown
+namespace Sifter.UI.Dropdown.LayoutDropdown
 {
-    public class KeymapDropdown : SifterDropdown, IDropdownIndividual
+    public class KeymapDropdown : MonoBehaviour
     {
-        public void IndividualStart()
+        TMP_Dropdown _dropdown;
+
+        void Start()
         {
-            throw new NotImplementedException();
+            _dropdown = GetComponent<TMP_Dropdown>();
+            var singletonKeymapNames = SaveManager.Singleton.KeymapNames;
+            _dropdown.ClearOptions();
+            _dropdown.AddOptions(singletonKeymapNames);
         }
 
         public void IndividualValueChanged()
         {
-            throw new NotImplementedException();
+            EventManager.Singleton.InvokeEvent(EventManager.Singleton.OnLayoutChanged);
         }
     }
 }

@@ -5,12 +5,12 @@ namespace Sifter
     public class InputManager : MonoBehaviour
     {
         public Inputactions Inputactions;
-        public static InputManager Instance { get; private set; }
+        public static InputManager Singleton { get; private set; }
 
         void Awake()
         {
-            if (Instance == null)
-                Instance = this;
+            if (Singleton == null)
+                Singleton = this;
             else
                 Destroy(gameObject);
             Inputactions = new Inputactions();
