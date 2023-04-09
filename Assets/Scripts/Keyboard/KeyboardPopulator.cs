@@ -17,13 +17,19 @@ namespace Sifter.Keyboard
             var keyboardButtons = LayoutLoader.LoadLayout();
             foreach (var button in keyboardButtons)
             foreach (var b in _buttons.Where(b => b.KeyboardButton.Position.Column == button.Position.Row &&
-                                                  b.KeyboardButton.Position.Row == button.Position.Column))
+                                                  b.KeyboardButton.Position.Row ==
+                                                  button.Position.Column)) // TODO: Clean this up
             {
                 if (!b.Changeable) continue;
                 b.KeyboardButton.Key = button.Key;
                 b.KeyboardButton.ShiftKey = button.ShiftKey;
                 b.RedrawKey();
             }
+        }
+
+        void OnDisable()
+        {
+            EventManager.Singleton.OnLayoutChanged -= LoadLayout;
         }
 
         void LoadLayout()

@@ -20,7 +20,7 @@ namespace Sifter.UI.Dropdown.LayoutDropdown
             {
                 print("Inside completed");
                 var layouts = handle.Result.Select(layout => layout.name).ToList();
-                // _dropdown.ClearOptions();
+                _dropdown.ClearOptions();
                 _dropdown.AddOptions(layouts);
             };
         }
