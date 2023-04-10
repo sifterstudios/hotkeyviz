@@ -6,11 +6,12 @@ namespace Sifter.Managers
 {
     public class EventManager : MonoBehaviour
     {
+        public UnityEvent OnModeChange;
+        public UnityEvent OnModeClear;
         public UnityAction<string> OnKeymapCreateConfirmed;
-public UnityAction<StateEnum> OnStateChanged;
         public Action OnLayoutChanged;
         public UnityAction OnPopupCancelled;
-
+        public Action<StateEnum> OnStateChanged;
         public static EventManager Singleton { get; private set; }
 
         void Awake()
@@ -25,12 +26,6 @@ public UnityAction<StateEnum> OnStateChanged;
             DontDestroyOnLoad(gameObject);
             OnKeymapCreateConfirmed += HandleOnKeymapCreateConfirmed;
             OnPopupCancelled += HandleOnPopupCancelled;
-            OnStateChanged += HandleOnStateChanged;
-        }
-
-        void HandleOnStateChanged(StateEnum newState)
-        {
-            StateManager.Singleton.ChangeState(newState);
         }
 
         void OnDisable()
@@ -47,11 +42,6 @@ public UnityAction<StateEnum> OnStateChanged;
         void HandleOnKeymapCreateConfirmed(string keymapName)
         {
             SaveManager.Singleton.SaveKeymap(keymapName);
-        }
-
-        public void InvokeEvent(Action action)
-        {
-            action?.Invoke();
         }
 
         public void OnKeymapChanged(string keymapName)

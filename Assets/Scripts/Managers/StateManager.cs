@@ -5,8 +5,8 @@ namespace Sifter.Managers
     public class StateManager : MonoBehaviour
     {
         public static StateManager Singleton;
-         StateEnum _currentState;
- 
+        public StateEnum _currentState;
+
         void Awake()
         {
             if (Singleton != null)
