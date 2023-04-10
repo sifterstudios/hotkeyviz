@@ -4,15 +4,18 @@ namespace Sifter.UI.Button
 {
     public class ButtonBorder : MonoBehaviour
     {
+        void Start()
+        {
+            gameObject.SetActive(false);
+        }
+
         void OnMouseEnter()
         {
-            print("Enter");
             gameObject.SetActive(true);
         }
 
         void OnMouseExit()
         {
-            print("Exit");
             gameObject.SetActive(false);
         }
     }
