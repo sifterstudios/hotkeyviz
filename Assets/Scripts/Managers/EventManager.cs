@@ -7,8 +7,7 @@ namespace Sifter.Managers
     public class EventManager : MonoBehaviour
     {
         public UnityAction<string> OnKeymapCreateConfirmed;
-
-// Declare event for when the keyboard layout changes
+public UnityAction<StateEnum> OnStateChanged;
         public Action OnLayoutChanged;
         public UnityAction OnPopupCancelled;
 
@@ -26,6 +25,12 @@ namespace Sifter.Managers
             DontDestroyOnLoad(gameObject);
             OnKeymapCreateConfirmed += HandleOnKeymapCreateConfirmed;
             OnPopupCancelled += HandleOnPopupCancelled;
+            OnStateChanged += HandleOnStateChanged;
+        }
+
+        void HandleOnStateChanged(StateEnum newState)
+        {
+            StateManager.Singleton.ChangeState(newState);
         }
 
         void OnDisable()
@@ -47,6 +52,15 @@ namespace Sifter.Managers
         public void InvokeEvent(Action action)
         {
             action?.Invoke();
+        }
+
+        public void OnKeymapChanged(string keymapName)
+        {
+            // TODO: Load keymap
+            if (keymapName == "Add new keymap")
+                UIManager.Singleton.CreatePopupWithTextInput("Create New Keymap",
+                    "Please enter a name for your new keymap.",
+                    OnKeymapCreateConfirmed, OnPopupCancelled);
         }
     }
 }

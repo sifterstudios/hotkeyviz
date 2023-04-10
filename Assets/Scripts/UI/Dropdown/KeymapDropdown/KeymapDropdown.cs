@@ -2,7 +2,7 @@ using Sifter.Managers;
 using TMPro;
 using UnityEngine;
 
-namespace Sifter.UI.Dropdown.LayoutDropdown
+namespace Sifter.UI.Dropdown.KeymapDropdown
 {
     public class KeymapDropdown : MonoBehaviour
     {
@@ -11,14 +11,17 @@ namespace Sifter.UI.Dropdown.LayoutDropdown
         void Start()
         {
             _dropdown = GetComponent<TMP_Dropdown>();
-            var singletonKeymapNames = SaveManager.Singleton.KeymapNames;
             _dropdown.ClearOptions();
+            var singletonKeymapNames = SaveManager.Singleton.KeymapNames;
+            if (!singletonKeymapNames.Contains("Add new keymap")) singletonKeymapNames.Add("Add new keymap");
+
             _dropdown.AddOptions(singletonKeymapNames);
         }
 
-        public void IndividualValueChanged()
+        public void OnKeymapChanged()
         {
-            EventManager.Singleton.InvokeEvent(EventManager.Singleton.OnLayoutChanged);
+            var keymapName = _dropdown.options[_dropdown.value].text;
+            EventManager.Singleton.OnKeymapChanged(keymapName);
         }
     }
 }

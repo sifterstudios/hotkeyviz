@@ -34,6 +34,7 @@ namespace Sifter.Managers
 
         public void SaveKeymap(string keymapName)
         {
+            if (keymapName == "Add new keymap") return;
             if (KeymapNames.Contains(keymapName))
             {
                 UIManager.Singleton.CreatePopupWithTextInput("Keymap Already Exists",

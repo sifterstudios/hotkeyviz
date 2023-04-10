@@ -18,6 +18,10 @@ namespace Sifter.Managers
             }
 
             Singleton = this;
+            var refreshRate = Screen.currentResolution.refreshRateRatio;
+            var refreshRateValue = refreshRate.value;
+            var test = int.Parse(refreshRateValue.ToString());
+            Application.targetFrameRate = test;
         }
     }
 }
