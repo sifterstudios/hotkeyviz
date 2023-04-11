@@ -437,6 +437,7 @@ MonoBehaviour:
   _text: {fileID: 6142112872971586294}
   _col: 0
   _row: 0
+  _border: {fileID: 2427920863658970264}
   KeyboardButton:
     Key: 
     ShiftKey: 

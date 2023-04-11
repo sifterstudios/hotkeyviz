@@ -1,15 +1,19 @@
+using DTT.UI.ProceduralUI;
 using Sifter.Keyboard;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using static Sifter.InputManager;
 
 namespace Sifter.UI.Button
 {
-    public class Button : MonoBehaviour
+    public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField] TMP_Text _text;
         [SerializeField] int _col;
         [SerializeField] int _row;
+        [SerializeField] RoundedImage _border;
+
 
         public KeyboardButton KeyboardButton;
         public bool Changeable;
@@ -47,6 +51,16 @@ namespace Sifter.UI.Button
             else transformLocalScale.y = x;
         }
 #endif
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _border.gameObject.SetActive(true);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _border.gameObject.SetActive(false);
+        }
 
         void ShiftPressed()
         {

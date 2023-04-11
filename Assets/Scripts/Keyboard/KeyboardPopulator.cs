@@ -10,12 +10,13 @@ namespace Sifter.Keyboard
     public class KeyboardPopulator : MonoBehaviour
     {
         [SerializeField] List<Button> _buttons;
+        public List<KeyboardButton> KeyboardButtons;
 
         void Start()
         {
             EventManager.Singleton.OnLayoutChanged += LoadLayout;
-            var keyboardButtons = LayoutLoader.LoadLayout();
-            foreach (var button in keyboardButtons)
+            KeyboardButtons = LayoutLoader.LoadLayout();
+            foreach (var button in KeyboardButtons)
             foreach (var b in _buttons.Where(b => b.KeyboardButton.Position.Column == button.Position.Row &&
                                                   b.KeyboardButton.Position.Row ==
                                                   button.Position.Column)) // TODO: Clean this up

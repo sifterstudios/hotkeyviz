@@ -8,6 +8,8 @@ namespace Sifter.Managers
     {
         public UnityEvent OnModeChange;
         public UnityEvent OnModeClear;
+        public UnityAction<string> OnKeymapChangedInGUI;
+        public UnityAction<string> OnKeymapLoadingStarted;
         public UnityAction<string> OnKeymapCreateConfirmed;
         public Action OnLayoutChanged;
         public UnityAction OnPopupCancelled;
@@ -36,21 +38,14 @@ namespace Sifter.Managers
         void HandleOnPopupCancelled()
         {
             // TODO: For now..
-            SaveManager.Singleton.LoadKeymap();
+            PersistenceManager.Singleton.LoadKeymap();
         }
 
         void HandleOnKeymapCreateConfirmed(string keymapName)
         {
-            SaveManager.Singleton.SaveKeymap(keymapName);
+            // TODO: Change this to be called from an event instead of a direct dependency
+            PersistenceManager.Singleton.SaveKeymap(keymapName);
         }
 
-        public void OnKeymapChanged(string keymapName)
-        {
-            // TODO: Load keymap
-            if (keymapName == "Add new keymap")
-                UIManager.Singleton.CreatePopupWithTextInput("Create New Keymap",
-                    "Please enter a name for your new keymap.",
-                    OnKeymapCreateConfirmed, OnPopupCancelled);
-        }
     }
 }

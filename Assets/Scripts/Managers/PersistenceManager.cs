@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using Sifter.DataManagement;
 using UnityEngine;
 
 namespace Sifter.Managers
 {
-    public class SaveManager : MonoBehaviour
+    public class PersistenceManager : MonoBehaviour
     {
-        public static SaveManager Singleton;
+        public static PersistenceManager Singleton;
         public List<string> KeymapNames;
+        public Dictionary<string, List<KeyBinding>> Keymaps;
 
         void Awake()
         {

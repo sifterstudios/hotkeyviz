@@ -19,6 +19,7 @@ namespace Sifter.UI.Modes
             EventManager.Singleton.OnModeChange.AddListener(HandleModeChange);
             EventManager.Singleton.OnModeClear.AddListener(HandleModeClear);
             print("registered listeners");
+            ShouldClearButtonShow();
         }
 
         void OnDisable()
@@ -31,8 +32,8 @@ namespace Sifter.UI.Modes
         void HandleModeClear()
         {
             foreach (var mode in _modeToggles.Where(mode => mode.isOn))
-                // mode.GetComponentInChildren<ColorSwapper>().SwapColor();
                 mode.isOn = false;
+            ShouldClearButtonShow();
         }
 
         void HandleModeChange()
@@ -40,19 +41,26 @@ namespace Sifter.UI.Modes
             switch (_localState)
             {
                 case StateEnum.BROWSE:
-                    // TODO: Handle browse mode
+                    ShouldClearButtonShow();
                     break;
                 case StateEnum.EDIT:
-                    // TODO: Handle edit mode
+                    ShouldClearButtonShow();
                     break;
                 case StateEnum.RECORD:
-                    // TODO: Handle record mode
+                    ShouldClearButtonShow();
                     break;
                 case StateEnum.POPUP:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        void ShouldClearButtonShow()
+        {
+            var clearButton = _modeToggles[^1];
+            var shouldShow = _modeToggles.Any(mode => mode.isOn);
+            clearButton.gameObject.SetActive(shouldShow);
         }
     }
 }
