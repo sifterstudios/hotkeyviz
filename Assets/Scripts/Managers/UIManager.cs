@@ -33,7 +33,8 @@ namespace Sifter.Managers
                     EventManager.Singleton.OnKeymapCreateConfirmed, EventManager.Singleton.OnPopupCancelled);
                 return;
             }
-            EventManager.Singleton.OnKeymapLoadingStarted(keymapName);
+
+            EventManager.Singleton.OnKeymapLoadStart(keymapName);
         }
 
         public void CreatePopupWithTextInput(string title, string message, UnityAction<string> onConfirm,

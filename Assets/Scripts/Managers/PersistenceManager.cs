@@ -8,6 +8,8 @@ namespace Sifter.Managers
     {
         public static PersistenceManager Singleton;
         public List<string> KeymapNames;
+        public string CurrentKeymapName;
+        public List<KeyBinding> CurrentKeymap;
         public Dictionary<string, List<KeyBinding>> Keymaps;
 
         void Awake()
@@ -19,10 +21,31 @@ namespace Sifter.Managers
             }
 
             Singleton = this;
-            LoadKeymap();
+            LoadKeymapName();
+            LoadKeymaps();
+            EventManager.Singleton.OnKeymapLoadStart += LoadKeymap;
+            EventManager.Singleton.OnKeymapChangedInGUI += LoadKeymap;
         }
 
-        public void LoadKeymap()
+        void LoadKeymap(string keymapName = null)
+        {
+            if (keymapName == "Add new keymap") return;
+            if (keymapName != null && keymapName != CurrentKeymapName)
+            {
+                CurrentKeymapName = keymapName;
+                CurrentKeymap = Keymaps[keymapName];
+            }
+
+            EventManager.Singleton.OnKeymapLoadComplete.Invoke(CurrentKeymap);
+        }
+
+        void LoadKeymaps()
+        {
+            if (ES3.KeyExists("Keymaps"))
+                ES3.Load<Dictionary<string, List<KeyBinding>>>("Keymaps");
+        }
+
+        public void LoadKeymapName()
         {
             KeymapNames = new List<string>();
             if (ES3.KeyExists("KeymapNames"))
@@ -34,7 +57,7 @@ namespace Sifter.Managers
                     EventManager.Singleton.OnKeymapCreateConfirmed, EventManager.Singleton.OnPopupCancelled);
         }
 
-        public void SaveKeymap(string keymapName)
+        public void SaveKeymapName(string keymapName)
         {
             if (keymapName == "Add new keymap") return;
             if (KeymapNames.Contains(keymapName))

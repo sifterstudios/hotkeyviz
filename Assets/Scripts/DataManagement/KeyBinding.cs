@@ -5,6 +5,6 @@ namespace Sifter.DataManagement
 {
     public class KeyBinding
     {
-        List<KeyboardButton> _buttonOrder;
+        public List<KeyboardButton> _buttonsOrdered;
     }
 }

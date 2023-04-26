@@ -1,3 +1,4 @@
+using System;
 using DTT.UI.ProceduralUI;
 using Sifter.Keyboard;
 using TMPro;
@@ -17,6 +18,8 @@ namespace Sifter.UI.Button
 
         public KeyboardButton KeyboardButton;
         public bool Changeable;
+        int _bindingCounter;
+        int _currentDrawnBindingCounter;
         bool _isShiftPressed;
 
         void Awake()
@@ -80,6 +83,23 @@ namespace Sifter.UI.Button
         {
             if (!Changeable) return;
             _text.text = _isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
+            if (_bindingCounter == _currentDrawnBindingCounter) return;
+            DecideOnBackground();
+        }
+
+        void DecideOnBackground()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void IncrementBindingCounter()
+        {
+            _bindingCounter++;
+        }
+
+        public void DecrementBindingCounter()
+        {
+            _bindingCounter = Math.Clamp(_bindingCounter - 1, 0, int.MaxValue);
         }
     }
 }
