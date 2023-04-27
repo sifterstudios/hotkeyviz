@@ -4,6 +4,7 @@ using Sifter.Keyboard;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 using static Sifter.InputManager;
 
 namespace Sifter.UI.Button
@@ -15,9 +16,21 @@ namespace Sifter.UI.Button
         [SerializeField] int _row;
         [SerializeField] RoundedImage _border;
 
+        [SerializeField] Color _noKeybindsColor;
+        [SerializeField] Color _oneKeybindColor;
+        [SerializeField] Color _twoKeybindsColor;
+        [SerializeField] Color _threeKeybindsColor;
+        [SerializeField] Color _fourKeybindsColor;
+        [SerializeField] Color _fiveKeybindsColor;
+        [SerializeField] Color _sixKeybindsColor;
+
+        [FormerlySerializedAs("_moreThanSevenKeybindsColor")] [SerializeField]
+        Color _moreThanSixKeybindsColor;
+
 
         public KeyboardButton KeyboardButton;
         public bool Changeable;
+        RoundedImage _background;
         int _bindingCounter;
         int _currentDrawnBindingCounter;
         bool _isShiftPressed;
@@ -33,6 +46,8 @@ namespace Sifter.UI.Button
             if (!Changeable) _text.text = KeyboardButton.Key;
             KeyboardButton.Position.Column = _col;
             KeyboardButton.Position.Row = _row;
+            _background = GetComponent<RoundedImage>();
+            RedrawKey();
         }
 
         void OnDisable()
@@ -83,13 +98,29 @@ namespace Sifter.UI.Button
         {
             if (!Changeable) return;
             _text.text = _isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
-            if (_bindingCounter == _currentDrawnBindingCounter) return;
             DecideOnBackground();
         }
 
         void DecideOnBackground()
         {
-            throw new NotImplementedException();
+            if (_currentDrawnBindingCounter == _bindingCounter && _currentDrawnBindingCounter != 0) return;
+            _background.color = GetColorBasedOnBindingCounter();
+            _currentDrawnBindingCounter = _bindingCounter;
+        }
+
+        Color GetColorBasedOnBindingCounter()
+        {
+            return _bindingCounter switch
+            {
+                0 => _noKeybindsColor,
+                1 => _oneKeybindColor,
+                2 => _twoKeybindsColor,
+                3 => _threeKeybindsColor,
+                4 => _fourKeybindsColor,
+                5 => _fiveKeybindsColor,
+                6 => _sixKeybindsColor,
+                _ => _moreThanSixKeybindsColor
+            };
         }
 
         public void IncrementBindingCounter()

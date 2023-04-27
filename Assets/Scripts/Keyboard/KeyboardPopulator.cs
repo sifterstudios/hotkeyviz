@@ -18,23 +18,6 @@ namespace Sifter.Keyboard
             EventManager.Singleton.OnKeymapLoadComplete += OnKeymapLoadComplete;
         }
 
-        void OnKeymapLoadComplete(List<KeyBinding> keybindings)
-        {
-            for (int i = 0; i < keybindings.Count; i++)
-            {
-               var buttonsOrdered = keybindings[i]._buttonsOrdered; 
-                foreach (var button in buttonsOrdered)
-                {
-                    var b = _buttons.FirstOrDefault(b => b.KeyboardButton.Position.Column == button.Position.Row &&
-                                                         b.KeyboardButton.Position.Row ==
-                                                         button.Position.Column); // TODO: Clean this up
-                    if (b == null) continue;
-                    b.IncrementBindingCounter();
-                    b.RedrawKey();
-                }
-            }
-        }
-
         void Start()
         {
             EventManager.Singleton.OnLayoutChanged += LoadLayout;
@@ -56,7 +39,25 @@ namespace Sifter.Keyboard
             EventManager.Singleton.OnLayoutChanged -= LoadLayout;
         }
 
-        void LoadLayout()
+        void OnKeymapLoadComplete(List<KeyBinding> keybindings)
+        {
+            foreach (var b in from t in keybindings
+                     select t._buttonsOrdered
+                     into buttonsOrdered
+                     from button in buttonsOrdered
+                     select _buttons.FirstOrDefault(b => b.KeyboardButton.Position.Column == button.Position.Row &&
+                                                         b.KeyboardButton.Position.Row ==
+                                                         button.Position.Column)
+                     into b
+                     where b != null
+                     select b)
+            {
+                b.IncrementBindingCounter();
+                b.RedrawKey();
+            }
+        }
+
+        static void LoadLayout()
         {
             print("This works!");
         }
