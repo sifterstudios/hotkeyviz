@@ -1,7 +1,7 @@
 using Sifter.Managers;
 using UnityEngine;
 
-namespace Sifter.UI.Modes
+namespace Sifter.UI.Button.Modes
 {
     public class ModeButton : MonoBehaviour
     {

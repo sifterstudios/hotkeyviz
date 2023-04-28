@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Sifter.DataManagement;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace Sifter.Managers
         public static PersistenceManager Singleton;
         public List<string> KeymapNames;
         public string CurrentKeymapName;
+        KeyBinding _newKeybinding;
         public List<KeyBinding> CurrentKeymap;
         public Dictionary<string, List<KeyBinding>> Keymaps;
 
@@ -23,8 +25,40 @@ namespace Sifter.Managers
             Singleton = this;
             LoadKeymapName();
             LoadKeymaps();
+        }
+
+        void OnEnable()
+        {
             EventManager.Singleton.OnKeymapLoadStart += LoadKeymap;
             EventManager.Singleton.OnKeymapChangedInGUI += LoadKeymap;
+            EventManager.Singleton.OnStateChanged += HandleOnStateChanged;
+        }
+
+        void OnDisable()
+        {
+            EventManager.Singleton.OnKeymapLoadStart -= LoadKeymap;
+            EventManager.Singleton.OnKeymapChangedInGUI -= LoadKeymap;
+            EventManager.Singleton.OnStateChanged -= HandleOnStateChanged;
+        }
+
+        void HandleOnStateChanged(StateEnum obj)
+        {
+            switch (obj)
+            {
+                case StateEnum.BROWSE:
+                    break;
+                case StateEnum.EDIT:
+                    break;
+                case StateEnum.RECORD:
+                    InitiateRecording();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(obj), obj, "No such state");
+            }
+        }
+
+        void InitiateRecording()
+        {
         }
 
         void LoadKeymap(string keymapName = null)

@@ -5,7 +5,7 @@ using Sifter.Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Sifter.UI.Modes
+namespace Sifter.UI.Button.Modes
 {
     public class ModeSelector : MonoBehaviour
     {
@@ -18,7 +18,6 @@ namespace Sifter.UI.Modes
             EventManager.Singleton.OnStateChanged += ctx => _localState = ctx;
             EventManager.Singleton.OnModeChange.AddListener(HandleModeChange);
             EventManager.Singleton.OnModeClear.AddListener(HandleModeClear);
-            print("registered listeners");
             ShouldClearButtonShow();
         }
 

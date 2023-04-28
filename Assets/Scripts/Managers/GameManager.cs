@@ -1,3 +1,4 @@
+using System.Globalization;
 using Sifter.Keyboard;
 using UnityEngine;
 
@@ -19,8 +20,8 @@ namespace Sifter.Managers
             Singleton = this;
             var refreshRate = Screen.currentResolution.refreshRateRatio;
             var refreshRateValue = refreshRate.value;
-            var test = int.Parse(refreshRateValue.ToString());
-            Application.targetFrameRate = test;
+            var targetFrameRate = int.Parse(refreshRateValue.ToString(CultureInfo.InvariantCulture));
+            Application.targetFrameRate = targetFrameRate;
             EventManager.Singleton.OnLayoutChanged += HandleOnLayoutChanged;
         }
 
