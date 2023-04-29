@@ -8,11 +8,13 @@ namespace Sifter.Managers
     public class PersistenceManager : MonoBehaviour
     {
         public static PersistenceManager Singleton;
-        public List<string> KeymapNames;
-        public string CurrentKeymapName;
+        public List<string> _keymapNames;
+
+        public string _currentKeymapName;
+
+        List<KeyBinding> _currentKeymap;
         KeyBinding _newKeybinding;
-        public List<KeyBinding> CurrentKeymap;
-        public Dictionary<string, List<KeyBinding>> Keymaps;
+        readonly Dictionary<string, List<KeyBinding>> Keymaps = new();
 
         void Awake()
         {
@@ -41,39 +43,57 @@ namespace Sifter.Managers
             EventManager.Singleton.OnStateChanged -= HandleOnStateChanged;
         }
 
-        void HandleOnStateChanged(StateEnum obj)
+        void HandleOnStateChanged(StateEnum state)
         {
-            switch (obj)
+            switch (state)
             {
                 case StateEnum.BROWSE:
+                    InitiateBrowse();
                     break;
                 case StateEnum.EDIT:
+                    InitiateEdit();
                     break;
                 case StateEnum.RECORD:
                     InitiateRecording();
                     break;
+                case StateEnum.POPUP:
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(obj), obj, "No such state");
+                    throw new ArgumentOutOfRangeException(nameof(state), state, "No such state");
             }
+        }
+
+        void InitiateBrowse()
+        {
+            if (_newKeybinding._buttonsOrdered.Capacity <= 0) return;
+            _currentKeymap.Add(_newKeybinding);
+            _newKeybinding = new KeyBinding();
+        }
+
+        void InitiateEdit()
+        {
+            // TODO: If we're adding an edit mode, this will need to be implemented
+            throw new NotImplementedException();
         }
 
         void InitiateRecording()
         {
+            if (_newKeybinding._buttonsOrdered.Capacity <= 0) _newKeybinding = new KeyBinding();
         }
 
         void LoadKeymap(string keymapName = null)
         {
             if (keymapName == "Add new keymap") return;
-            if (keymapName != null && keymapName != CurrentKeymapName)
+            if (keymapName != null && keymapName != _currentKeymapName)
             {
-                CurrentKeymapName = keymapName;
-                CurrentKeymap = Keymaps[keymapName];
+                _currentKeymapName = keymapName;
+                _currentKeymap = Keymaps[keymapName];
             }
 
-            EventManager.Singleton.OnKeymapLoadComplete.Invoke(CurrentKeymap);
+            EventManager.Singleton.OnKeymapLoadComplete.Invoke(_currentKeymap);
         }
 
-        void LoadKeymaps()
+        static void LoadKeymaps()
         {
             if (ES3.KeyExists("Keymaps"))
                 ES3.Load<Dictionary<string, List<KeyBinding>>>("Keymaps");
@@ -81,9 +101,9 @@ namespace Sifter.Managers
 
         public void LoadKeymapName()
         {
-            KeymapNames = new List<string>();
+            _keymapNames = new List<string>();
             if (ES3.KeyExists("KeymapNames"))
-                KeymapNames = ES3.Load<List<string>>("KeymapNames");
+                _keymapNames = ES3.Load<List<string>>("KeymapNames");
 
             else
                 UIManager.Singleton.CreatePopupWithTextInput("No Keymaps Found",
@@ -94,7 +114,7 @@ namespace Sifter.Managers
         public void SaveKeymapName(string keymapName)
         {
             if (keymapName == "Add new keymap") return;
-            if (KeymapNames.Contains(keymapName))
+            if (_keymapNames.Contains(keymapName))
             {
                 UIManager.Singleton.CreatePopupWithTextInput("Keymap Already Exists",
                     "A keymap with that name already exists. Please enter a new name.",
@@ -102,8 +122,8 @@ namespace Sifter.Managers
                 return;
             }
 
-            KeymapNames.Add(keymapName);
-            ES3.Save("KeymapNames", KeymapNames);
+            _keymapNames.Add(keymapName);
+            ES3.Save("KeymapNames", _keymapNames);
         }
     }
 }

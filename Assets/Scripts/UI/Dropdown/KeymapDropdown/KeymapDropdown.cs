@@ -12,7 +12,7 @@ namespace Sifter.UI.Dropdown.KeymapDropdown
         {
             _dropdown = GetComponent<TMP_Dropdown>();
             _dropdown.ClearOptions();
-            var singletonKeymapNames = PersistenceManager.Singleton.KeymapNames;
+            var singletonKeymapNames = PersistenceManager.Singleton._keymapNames;
             if (!singletonKeymapNames.Contains("Add new keymap")) singletonKeymapNames.Add("Add new keymap");
 
             _dropdown.AddOptions(singletonKeymapNames);

@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using System.Globalization;
+using Sifter.DataManagement;
 using Sifter.Keyboard;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Sifter.Managers
 {
@@ -8,6 +11,11 @@ namespace Sifter.Managers
     {
         public static GameManager Singleton = new();
         [SerializeField] KeyboardPopulator _keyboardPopulator;
+        public bool isNormalModeActivated;
+        public bool isInsertModeActivated;
+        public bool isVisualModeActivated;
+        public bool isCommandModeActivated;
+
 
         void Awake()
         {
@@ -23,6 +31,28 @@ namespace Sifter.Managers
             var targetFrameRate = int.Parse(refreshRateValue.ToString(CultureInfo.InvariantCulture));
             Application.targetFrameRate = targetFrameRate;
             EventManager.Singleton.OnLayoutChanged += HandleOnLayoutChanged;
+        }
+
+        void OnEnable()
+        {
+            EventManager.Singleton.OnModeChanged += HandleModeChange;
+            EventManager.Singleton.OnModeClear.AddListener(HandleModeClear);
+        }
+
+        void HandleModeChange(List<Toggle> toggles)
+        {
+            isNormalModeActivated = toggles[Modes.Normal].isOn;
+            isInsertModeActivated = toggles[Modes.Insert].isOn;
+            isVisualModeActivated = toggles[Modes.Visual].isOn;
+            isCommandModeActivated = toggles[Modes.Command].isOn;
+        }
+
+        void HandleModeClear()
+        {
+            isNormalModeActivated = false;
+            isInsertModeActivated = false;
+            isVisualModeActivated = false;
+            isCommandModeActivated = false;
         }
 
         void HandleOnLayoutChanged()

@@ -15,10 +15,14 @@ namespace Sifter.UI.Button.Modes
         void Awake()
         {
             _localState = StateManager.Singleton._currentState;
+            ShouldClearButtonShow();
+        }
+
+        void OnEnable()
+        {
             EventManager.Singleton.OnStateChanged += ctx => _localState = ctx;
             EventManager.Singleton.OnModeChange.AddListener(HandleModeChange);
             EventManager.Singleton.OnModeClear.AddListener(HandleModeClear);
-            ShouldClearButtonShow();
         }
 
         void OnDisable()
@@ -40,6 +44,7 @@ namespace Sifter.UI.Button.Modes
             switch (_localState)
             {
                 case StateEnum.BROWSE:
+                    EventManager.Singleton.OnModeChanged.Invoke(_modeToggles);
                     ShouldClearButtonShow();
                     break;
                 case StateEnum.EDIT:

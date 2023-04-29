@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Sifter.DataManagement;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Sifter.Managers
 {
@@ -10,13 +11,14 @@ namespace Sifter.Managers
     {
         public UnityEvent OnModeChange;
         public UnityEvent OnModeClear;
-        public Action OnLayoutChanged;
-        public Action<StateEnum> OnStateChanged;
         public UnityAction<string> OnKeymapChangedInGUI;
         public UnityAction<string> OnKeymapCreateConfirmed;
         public UnityAction<List<KeyBinding>> OnKeymapLoadComplete;
         public UnityAction<string> OnKeymapLoadStart;
+        public Action OnLayoutChanged;
+        public Action<List<Toggle>> OnModeChanged;
         public UnityAction OnPopupCancelled;
+        public Action<StateEnum> OnStateChanged;
         public static EventManager Singleton { get; private set; }
 
         void Awake()
