@@ -1,6 +1,7 @@
 using System;
 using DTT.UI.ProceduralUI;
 using Sifter.Keyboard;
+using Sifter.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,7 +10,7 @@ using static Sifter.InputManager;
 
 namespace Sifter.UI.Button
 {
-    public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] TMP_Text _text;
         [SerializeField] int _col;
@@ -31,14 +32,16 @@ namespace Sifter.UI.Button
         public KeyboardButton KeyboardButton;
         public bool Changeable;
         RoundedImage _background;
-        int _bindingCounter;
+        int _bindingCounter; // TODO: Add functionality for when binding is added or removed.
         int _currentDrawnBindingCounter;
         bool _isShiftPressed;
+        StateEnum _localState;
 
         void Awake()
         {
             Singleton.Inputactions.Browse.ShiftLayerVisual.performed += _ => ShiftPressed();
             Singleton.Inputactions.Browse.ShiftLayerVisual.canceled += _ => ShiftReleased();
+            EventManager.Singleton.OnStateChanged += ctx => _localState = ctx;
         }
 
         void Start()
@@ -69,6 +72,26 @@ namespace Sifter.UI.Button
             else transformLocalScale.y = x;
         }
 #endif
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            switch (_localState)
+            {
+                case StateEnum.BROWSE:
+                    // TODO: Show hover with current keybinds or update visual if button is a prefix. To be honest,
+                    // Hover should probably be handled by actual hovering and prefixing by clicking.
+                    break;
+                case StateEnum.EDIT:
+                    // TODO: Editing might only be deletion, in chat case show a popup with confirmation message.
+                    break;
+                case StateEnum.RECORD:
+                    EventManager.Singleton.OnButtonClickedInRecordMode.Invoke(this);
+                    break;
+                case StateEnum.POPUP:
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {

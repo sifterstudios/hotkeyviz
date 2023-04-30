@@ -4,6 +4,7 @@ using Sifter.DataManagement;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using Button = Sifter.UI.Button.Button;
 
 namespace Sifter.Managers
 {
@@ -11,6 +12,7 @@ namespace Sifter.Managers
     {
         public UnityEvent OnModeChange;
         public UnityEvent OnModeClear;
+        public UnityAction<Button> OnButtonClickedInRecordMode;
         public UnityAction<string> OnKeymapChangedInGUI;
         public UnityAction<string> OnKeymapCreateConfirmed;
         public UnityAction<List<KeyBinding>> OnKeymapLoadComplete;

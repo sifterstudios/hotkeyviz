@@ -1,3 +1,4 @@
+using System;
 using Sifter.UI.Popup;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,6 +10,7 @@ namespace Sifter.Managers
         public static UIManager Singleton;
         [SerializeField] GameObject _popup;
         [SerializeField] GameObject _canvas;
+        [SerializeField] GameObject _descriptionAndConfirmAndDelete;
 
 
         void Awake()
@@ -21,6 +23,35 @@ namespace Sifter.Managers
 
             Singleton = this;
             EventManager.Singleton.OnKeymapChangedInGUI += OnKeymapChanged;
+            EventManager.Singleton.OnStateChanged += OnStateChanged;
+            _descriptionAndConfirmAndDelete.gameObject.SetActive(false);
+        }
+
+        void OnDisable()
+        {
+            EventManager.Singleton.OnKeymapChangedInGUI -= OnKeymapChanged;
+            EventManager.Singleton.OnStateChanged -= OnStateChanged;
+        }
+
+        void OnStateChanged(StateEnum state)
+        {
+            switch (state)
+            {
+                case StateEnum.BROWSE:
+                    _descriptionAndConfirmAndDelete.gameObject.SetActive(false);
+                    break;
+                case StateEnum.EDIT:
+                    _descriptionAndConfirmAndDelete.gameObject.SetActive(true);
+                    break;
+                case StateEnum.RECORD:
+                    _descriptionAndConfirmAndDelete.gameObject.SetActive(true);
+                    break;
+                case StateEnum.POPUP:
+                    _descriptionAndConfirmAndDelete.gameObject.SetActive(false);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(state), state, "No such state");
+            }
         }
 
         void OnKeymapChanged(string keymapName)

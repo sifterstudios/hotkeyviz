@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
+using DTT.UI.ProceduralUI;
 using Sifter.DataManagement;
+using Sifter.UI.Button;
+using Sifter.Util;
+using TMPro;
 using UnityEngine;
 
 namespace Sifter.Managers
@@ -8,13 +12,14 @@ namespace Sifter.Managers
     public class PersistenceManager : MonoBehaviour
     {
         public static PersistenceManager Singleton;
+        [SerializeField] TMP_InputField _descriptionText;
         public List<string> _keymapNames;
 
         public string _currentKeymapName;
+        readonly Dictionary<string, List<KeyBinding>> Keymaps = new();
 
         List<KeyBinding> _currentKeymap;
-        KeyBinding _newKeybinding;
-        readonly Dictionary<string, List<KeyBinding>> Keymaps = new();
+        KeyBinding _newKeybinding = new();
 
         void Awake()
         {
@@ -34,6 +39,7 @@ namespace Sifter.Managers
             EventManager.Singleton.OnKeymapLoadStart += LoadKeymap;
             EventManager.Singleton.OnKeymapChangedInGUI += LoadKeymap;
             EventManager.Singleton.OnStateChanged += HandleOnStateChanged;
+            EventManager.Singleton.OnButtonClickedInRecordMode += HandleOnButtonClickedInRecordMode;
         }
 
         void OnDisable()
@@ -41,6 +47,13 @@ namespace Sifter.Managers
             EventManager.Singleton.OnKeymapLoadStart -= LoadKeymap;
             EventManager.Singleton.OnKeymapChangedInGUI -= LoadKeymap;
             EventManager.Singleton.OnStateChanged -= HandleOnStateChanged;
+        }
+
+        void HandleOnButtonClickedInRecordMode(Button button)
+        {
+            button.gameObject.GetComponent<RoundedImage>().color = Constants.Red;
+            _newKeybinding._buttonsOrdered.Add(button.KeyboardButton);
+            _newKeybinding.Description = _descriptionText.text;
         }
 
         void HandleOnStateChanged(StateEnum state)
@@ -70,7 +83,7 @@ namespace Sifter.Managers
             _newKeybinding = new KeyBinding();
         }
 
-        void InitiateEdit()
+        static void InitiateEdit()
         {
             // TODO: If we're adding an edit mode, this will need to be implemented
             throw new NotImplementedException();

@@ -14,7 +14,6 @@ namespace Sifter.UI.Button.Modes
 
         void Awake()
         {
-            _localState = StateManager.Singleton._currentState;
             ShouldClearButtonShow();
         }
 
