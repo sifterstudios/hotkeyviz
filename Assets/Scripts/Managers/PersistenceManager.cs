@@ -17,9 +17,9 @@ namespace Sifter.Managers
 
         public string _currentKeymapName;
         readonly Dictionary<string, List<KeyBinding>> Keymaps = new();
-
-        List<KeyBinding> _currentKeymap;
+        List<KeyBinding> _currentKeymap = new();
         KeyBinding _newKeybinding = new();
+        bool isRecording;
 
         void Awake()
         {
@@ -52,7 +52,7 @@ namespace Sifter.Managers
         void HandleOnButtonClickedInRecordMode(Button button)
         {
             button.gameObject.GetComponent<RoundedImage>().color = Constants.Red;
-            _newKeybinding._buttonsOrdered.Add(button.KeyboardButton);
+            _newKeybinding._buttonsOrdered.Add(button);
             _newKeybinding.Description = _descriptionText.text;
         }
 
@@ -78,9 +78,12 @@ namespace Sifter.Managers
 
         void InitiateBrowse()
         {
-            if (_newKeybinding._buttonsOrdered.Capacity <= 0) return;
+            if (_newKeybinding._buttonsOrdered.Count == 0) return;
+            if (!isRecording) return;
             _currentKeymap.Add(_newKeybinding);
+            foreach (var button in _newKeybinding._buttonsOrdered) button.RedrawKey();
             _newKeybinding = new KeyBinding();
+            isRecording = false;
         }
 
         static void InitiateEdit()
@@ -91,7 +94,8 @@ namespace Sifter.Managers
 
         void InitiateRecording()
         {
-            if (_newKeybinding._buttonsOrdered.Capacity <= 0) _newKeybinding = new KeyBinding();
+            if (_newKeybinding._buttonsOrdered.Count > 0) _newKeybinding = new KeyBinding();
+            isRecording = true;
         }
 
         void LoadKeymap(string keymapName = null)

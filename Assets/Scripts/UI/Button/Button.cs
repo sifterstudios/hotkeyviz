@@ -46,7 +46,8 @@ namespace Sifter.UI.Button
 
         void Start()
         {
-            if (!Changeable) _text.text = KeyboardButton.Key;
+            if (!Changeable)
+                _text.text = KeyboardButton.Key; // NOTE: Possible race condition, keyboardbutton needs to be set first!
             KeyboardButton.Position.Column = _col;
             KeyboardButton.Position.Row = _row;
             _background = GetComponent<RoundedImage>();

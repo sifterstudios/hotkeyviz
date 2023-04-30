@@ -9,7 +9,7 @@ namespace Sifter.Managers
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Singleton = new();
+        public static GameManager Singleton;
         [SerializeField] KeyboardPopulator _keyboardPopulator;
         public bool isNormalModeActivated;
         public bool isInsertModeActivated;

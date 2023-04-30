@@ -3,13 +3,15 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Sifter.Keyboard;
+using UnityEngine;
 
 namespace Sifter.Json
 {
-    public static class LayoutLoader
+    public class LayoutLoader : MonoBehaviour
     {
-        public static List<KeyboardButton> LoadLayout()
+        public List<KeyboardButton> LoadLayout()
         {
+            print("Got to start of LayoutLoader.LoadLayout()");
             var json = File.ReadAllText("Assets/Scripts/Json/Data/Layouts/ProgrammerDvorak.json");
             var jsonObject = JObject.Parse(json);
             IList<JToken> results = jsonObject["keyboardButtons"]?.Children().ToList();
