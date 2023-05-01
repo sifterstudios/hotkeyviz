@@ -2,6 +2,7 @@ using System;
 using DTT.UI.ProceduralUI;
 using Sifter.Keyboard;
 using Sifter.Managers;
+using Sifter.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -52,12 +53,6 @@ namespace Sifter.UI.Button
             KeyboardButton.Position.Row = _row;
             _background = GetComponent<RoundedImage>();
             RedrawKey();
-        }
-
-        void OnDisable()
-        {
-            Singleton.Inputactions.Browse.ShiftLayerVisual.performed -= _ => ShiftPressed();
-            Singleton.Inputactions.Browse.ShiftLayerVisual.canceled -= _ => ShiftReleased();
         }
 
 #if UNITY_EDITOR
@@ -128,7 +123,9 @@ namespace Sifter.UI.Button
         void DecideOnBackground()
         {
             if (_currentDrawnBindingCounter == _bindingCounter && _currentDrawnBindingCounter != 0) return;
-            _background.color = GetColorBasedOnBindingCounter();
+            _background.color = _localState == StateEnum.RECORD
+                ? Constants.Red
+                : GetColorBasedOnBindingCounter();
             _currentDrawnBindingCounter = _bindingCounter;
         }
 
