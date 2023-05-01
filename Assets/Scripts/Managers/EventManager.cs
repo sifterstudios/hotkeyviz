@@ -12,6 +12,7 @@ namespace Sifter.Managers
     {
         public UnityEvent OnModeChange;
         public UnityEvent OnModeClear;
+        public UnityEvent OnKeybindConfirm;
         public UnityAction<Button> OnButtonClickedInRecordMode;
         public UnityAction<string> OnKeymapChangedInGUI;
         public UnityAction<string> OnKeymapCreateConfirmed;

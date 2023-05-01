@@ -1,6 +1,7 @@
 using System;
 using Sifter.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Sifter.UI.Button.Record
 {
@@ -25,6 +26,7 @@ namespace Sifter.UI.Button.Record
             {
                 case StateEnum.BROWSE:
                     _visualButton.SetActive(true);
+                    _visualButton.GetComponentInChildren<Toggle>().isOn = false;
                     break;
                 case StateEnum.EDIT:
                     _visualButton.SetActive(false);

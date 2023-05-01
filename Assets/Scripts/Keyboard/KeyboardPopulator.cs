@@ -17,11 +17,6 @@ namespace Sifter.Keyboard
         public List<KeyboardButton> KeyboardButtons = new();
         LayoutLoader _layoutLoader;
 
-        void Awake()
-        {
-            EventManager.Singleton.OnKeymapLoadComplete += OnKeymapLoadComplete;
-        }
-
         void Start()
         {
             _layoutLoader = GetComponent<LayoutLoader>();
@@ -30,12 +25,24 @@ namespace Sifter.Keyboard
 
         void OnEnable()
         {
+            EventManager.Singleton.OnStateChanged += state =>
+            {
+                if (state == StateEnum.BROWSE) RedrawAllKeys();
+            };
+            EventManager.Singleton.OnKeybindConfirm.AddListener(RedrawAllKeys);
+            EventManager.Singleton.OnKeymapLoadComplete += OnKeymapLoadComplete;
             EventManager.Singleton.OnLayoutChanged += LoadLayout;
         }
 
         void OnDisable()
         {
+            EventManager.Singleton.OnKeymapLoadComplete -= OnKeymapLoadComplete;
             EventManager.Singleton.OnLayoutChanged -= LoadLayout;
+        }
+
+        void RedrawAllKeys()
+        {
+            foreach (var button in _buttonsGUI) button.RedrawKey();
         }
 
         void OnKeymapLoadComplete(List<KeyBinding> keybindings)
@@ -51,15 +58,15 @@ namespace Sifter.Keyboard
                      into b
                      where b != null
                      select b)
+            {
                 b.IncrementBindingCounter();
-            // b.RedrawKey();
+                b.RedrawKey();
+            }
         }
 
         void LoadLayout()
         {
-            print("This works!");
             KeyboardButtons = _layoutLoader.LoadLayout();
-            print("Number of buttons: " + KeyboardButtons.Count);
             foreach (var button in KeyboardButtons)
             foreach (var b in _buttonsGUI.Where(b => b.KeyboardButton.Position.Column == button.Position.Row &&
                                                      b.KeyboardButton.Position.Row ==

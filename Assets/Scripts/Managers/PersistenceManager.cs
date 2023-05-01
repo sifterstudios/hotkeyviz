@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using DTT.UI.ProceduralUI;
 using Sifter.DataManagement;
 using Sifter.UI.Button;
-using Sifter.Util;
 using TMPro;
 using UnityEngine;
 
@@ -16,10 +14,10 @@ namespace Sifter.Managers
         public List<string> _keymapNames;
 
         public string _currentKeymapName;
-        readonly Dictionary<string, List<KeyBinding>> Keymaps = new();
-        List<KeyBinding> _currentKeymap = new();
+        public List<KeyBinding> _currentKeymap = new();
         KeyBinding _newKeybinding = new();
         bool isRecording;
+        public Dictionary<string, List<KeyBinding>> Keymaps = new();
 
         void Awake()
         {
@@ -36,6 +34,7 @@ namespace Sifter.Managers
 
         void OnEnable()
         {
+            EventManager.Singleton.OnKeybindConfirm.AddListener(HandleOnKeybindConfirm);
             EventManager.Singleton.OnKeymapLoadStart += LoadKeymap;
             EventManager.Singleton.OnKeymapChangedInGUI += LoadKeymap;
             EventManager.Singleton.OnStateChanged += HandleOnStateChanged;
@@ -49,9 +48,18 @@ namespace Sifter.Managers
             EventManager.Singleton.OnStateChanged -= HandleOnStateChanged;
         }
 
+        void HandleOnKeybindConfirm()
+        {
+            _currentKeymap.Add(_newKeybinding);
+            _newKeybinding = new KeyBinding();
+            SaveKeymaps();
+        }
+
         void HandleOnButtonClickedInRecordMode(Button button)
         {
-            button.gameObject.GetComponent<RoundedImage>().color = Constants.Red;
+            button.RedrawKey();
+            if (!_newKeybinding._buttonsOrdered.Contains(button)) button.IncrementBindingCounter();
+
             _newKeybinding._buttonsOrdered.Add(button);
             _newKeybinding.Description = _descriptionText.text;
         }
@@ -80,8 +88,6 @@ namespace Sifter.Managers
         {
             if (_newKeybinding._buttonsOrdered.Count == 0) return;
             if (!isRecording) return;
-            _currentKeymap.Add(_newKeybinding);
-            foreach (var button in _newKeybinding._buttonsOrdered) button.RedrawKey();
             _newKeybinding = new KeyBinding();
             isRecording = false;
         }
@@ -110,10 +116,10 @@ namespace Sifter.Managers
             EventManager.Singleton.OnKeymapLoadComplete.Invoke(_currentKeymap);
         }
 
-        static void LoadKeymaps()
+        void LoadKeymaps()
         {
             if (ES3.KeyExists("Keymaps"))
-                ES3.Load<Dictionary<string, List<KeyBinding>>>("Keymaps");
+                Keymaps = ES3.Load<Dictionary<string, List<KeyBinding>>>("Keymaps");
         }
 
         public void LoadKeymapName()
@@ -141,6 +147,12 @@ namespace Sifter.Managers
 
             _keymapNames.Add(keymapName);
             ES3.Save("KeymapNames", _keymapNames);
+        }
+
+        public void SaveKeymaps()
+        {
+            Keymaps.Add(_currentKeymapName, _currentKeymap);
+            ES3.Save("Keymaps", Keymaps);
         }
     }
 }

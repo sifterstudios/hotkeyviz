@@ -117,6 +117,7 @@ namespace Sifter.UI.Button
         {
             if (!Changeable) return;
             _text.text = _isShiftPressed ? KeyboardButton.ShiftKey : KeyboardButton.Key;
+            if (_isShiftPressed) return;
             DecideOnBackground();
         }
 
@@ -144,9 +145,9 @@ namespace Sifter.UI.Button
             };
         }
 
-        public void IncrementBindingCounter()
+        public void IncrementBindingCounter(int count = 1)
         {
-            _bindingCounter++;
+            _bindingCounter += count;
         }
 
         public void DecrementBindingCounter()

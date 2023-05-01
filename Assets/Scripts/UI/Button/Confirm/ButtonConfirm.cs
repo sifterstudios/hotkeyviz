@@ -32,6 +32,7 @@ namespace Sifter.UI.Button.Confirm
                     EventManager.Singleton.OnStateChanged.Invoke(StateEnum.BROWSE);
                     break;
                 case StateEnum.RECORD:
+                    EventManager.Singleton.OnKeybindConfirm.Invoke();
                     EventManager.Singleton.OnStateChanged.Invoke(StateEnum.BROWSE);
                     break;
                 case StateEnum.POPUP:
